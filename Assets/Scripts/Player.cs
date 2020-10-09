@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    // the player camera (used for direction)
+    public GameObject playerCamera;
+
     public Rigidbody rigidBody;
 
     // movement force
@@ -102,8 +105,7 @@ public class Player : MonoBehaviour
 
             transform.Rotate(rot);
         }
-
-
+        else
         {
             // this was taken from prior in-class work from Intermediate Game Design
             // float turnSpeed = 115.0F;
@@ -111,9 +113,9 @@ public class Player : MonoBehaviour
             // float horizontal = Input.GetAxis("Horizontal") * turnSpeed * Time.deltaTime;
             // transform.Rotate(0, horizontal, 0);
 
-            // left and right
-            float theta = Input.GetAxis("Horizontal") * rotSpeed * Time.deltaTime;
-            transform.Rotate(0, theta, 0);
+            // left and right - uncommented
+            // float theta = Input.GetAxis("Horizontal") * rotSpeed * Time.deltaTime;
+            // transform.Rotate(0, theta, 0);
 
             // up and down
             // if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
@@ -128,7 +130,9 @@ public class Player : MonoBehaviour
             //     transform.Translate(0, 0, moveFactor);
             // }
 
-            float moveFactor = Input.GetAxis("Vertical") * moveForce * Time.deltaTime;
+            // uncommented
+            // float moveFactor = Input.GetAxis("Vertical") * moveForce * Time.deltaTime;
+
             //rigidBody.AddForce(Vector3.up * forceVec.y);
             // if (Input.GetKey(KeyCode.W))
             // {
@@ -145,14 +149,90 @@ public class Player : MonoBehaviour
             //     // rigidBody.AddForce(rf);
             // }
 
-            // FIX this later
-            transform.Translate(0, 0, moveFactor);
+            // FIX this later - uncommented
+            // transform.Translate(0, 0, moveFactor);
             // rigidBody.AddForce(Vector3.forward * moveFactor);
 
             //Vertical Axis -> up and down keys (or W and S)
             // float movementSpeed = 115.0F;
             // float vertical = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
             // transform.Translate(0, 0, vertical);
+
+            // camera rotation
+            // {
+            //     // original position and rotation
+            //     Vector3 origPos = transform.position;
+            //     Quaternion origRot = transform.rotation;
+            // 
+            //     // resets object to default position and rotation
+            //     transform.position = new Vector3();
+            //     transform.rotation = new Quaternion(0, 0, 0, 1);
+            // 
+            //     Vector3 camRot = playerCamera.transform.rotation.eulerAngles;
+            //     Vector3 temp = transform.forward;
+            // 
+            //     transform.RotateAround(new Vector3(0, 0, 0), Vector3.right, camRot.x); 
+            // 
+            // }
+            // 
+            // // rotate in opposite y-direction
+            // tVec.y += 180.0F;
+
+            // camera rotation
+            Vector3 direcVec = new Vector3();
+
+            // getting the forward direction vector
+            {
+                Vector3 origPos = transform.position;
+                Quaternion origRot = transform.rotation;
+
+                // recieves the camera rotation
+                Vector3 camRot = playerCamera.transform.rotation.eulerAngles;
+                camRot.y += 180.0F; // reverse direction
+
+                // the camera's position relative to the player.
+                // this has already been offset by the camera's rotation.
+                Vector3 camOffsetPos = transform.position - playerCamera.transform.position;
+                Vector3 camOffsetPosInv = camOffsetPos * -1; // reverse direction
+
+                // gets a normalized version of the vector
+                direcVec = camOffsetPosInv.normalized;
+
+                // if there is velocity
+                // if(rigidBody.velocity != new Vector3(0, 0, 0))
+                // {
+                //     // gets the angle between the two vectors
+                //     float angle = Vector3.Angle(rigidBody.velocity, camOffsetPosInv);
+                //     Vector3 rVec = Vector3.RotateTowards(rigidBody.velocity, camOffsetPosInv, 6.0F, 100.0F);
+                //     rVec.y = rigidBody.velocity.y;
+                // 
+                //     // saves the new velocity
+                //     rigidBody.velocity = rVec;
+                // }
+
+                // Movement
+                // forward and backward movement
+                if (Input.GetKey(KeyCode.W))
+                {
+                    rigidBody.AddForce(new Vector3(direcVec.x, 0.0F, direcVec.z) * -forceVec.z);
+                }
+                if (Input.GetKey(KeyCode.S))
+                {
+                    rigidBody.AddForce(new Vector3(direcVec.x, 0.0F, direcVec.z) * forceVec.z);
+                }
+            }
+
+
+
+            // leftward and rightward movement
+            // if (Input.GetKey(KeyCode.A))
+            // {
+            //     rigidBody.AddForce(Vector3.left * forceVec.x);
+            // }
+            // if (Input.GetKey(KeyCode.D))
+            // {
+            //     rigidBody.AddForce(Vector3.right * forceVec.x);
+            // }
         }
 
     }
