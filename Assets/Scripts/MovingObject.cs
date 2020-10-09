@@ -10,6 +10,9 @@ public class MovingObject : MonoBehaviour
     public Vector3 startPosition;
     public Vector3 endPosition;
 
+    // tells the program what axes to use.
+    public bool useX = true, useY = true, useZ = true;
+
     // time
     private float t = 0.0F;
 
@@ -17,7 +20,7 @@ public class MovingObject : MonoBehaviour
     bool loop = true;
 
     // incrementer
-    public float incrementer = 0.01F;
+    public float movementFactor = 1.0F;
 
     // Start is called before the first frame update
     void Start()
@@ -29,11 +32,22 @@ public class MovingObject : MonoBehaviour
     void Update()
     {
         // adds to 't' value
-        t += incrementer * Time.deltaTime;
+        t += movementFactor * Time.deltaTime;
         t = Mathf.Clamp(t, 0.0F, 1.0F);
 
         // lerps between values
-        transform.position = Vector3.Lerp(startPosition, endPosition, t);
+        Vector3 newPos = Vector3.Lerp(startPosition, endPosition, t);
+
+        // if an axis shouldn't be used, then that value is restored.
+        if(!useX)
+            newPos.x = transform.position.x;
+        if (!useY)
+            newPos.y = transform.position.y;
+        if (!useZ)
+            newPos.z = transform.position.z;
+
+        // changes the position
+        transform.position = newPos;
 
         // bringing t back to 0
         if(t >= 1.0F)

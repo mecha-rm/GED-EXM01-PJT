@@ -13,12 +13,14 @@ public class TitleManager : MonoBehaviour
         
     }
 
+    // changes the scene
     public void SwitchScene(string scene)
     {
         SceneManager.LoadScene(scene);
         
     }
 
+    // changes the scene
     public void SwitchScene(int scene)
     {
         SceneManager.LoadScene(scene);
