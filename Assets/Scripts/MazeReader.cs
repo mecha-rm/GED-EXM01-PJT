@@ -20,6 +20,8 @@ public struct MazeObject
 
 public class MazeReader : MonoBehaviour
 {
+    // attaches the gameplay manager to objects that need it.
+    public GameplayManager gpManager;
 
     // 
     // private struct MazeObjectItem
@@ -65,8 +67,8 @@ public class MazeReader : MonoBehaviour
                     // gets the pixel colour from the image at the provided row and column index.
                     Color clr = image.GetPixel(row * CELL_SIZE, col * CELL_SIZE);
                     
-                    if(clr == new Color(1.0F, 0.0F, 0.0F, 1.0F))
-                        Debug.Log(clr.ToString());
+                    // if(clr == new Color(1.0F, 0.0F, 0.0F, 1.0F))
+                    //     Debug.Log(clr.ToString());
 
                     // TODO: rewrite to be more efficient
                     // for(int i = 0; i < mazeObjects.Count; i++)
@@ -84,8 +86,6 @@ public class MazeReader : MonoBehaviour
                         // if the prefab have been found
                         if (clr == objClr)
                         {
-
-
                             // gets the position of the object
                             Vector3 pos = new Vector3();
                             pos.x = Mathf.Lerp(terrain.transform.position.x, terrain.transform.position.x + terrainSize.x, (col * CELL_SIZE) / (float)image.width);
@@ -93,6 +93,11 @@ public class MazeReader : MonoBehaviour
                             pos.z = Mathf.Lerp(terrain.transform.position.z, terrain.transform.position.z + terrainSize.z, (row * CELL_SIZE) / (float)image.height);
 
                             // Vector3 pos = new Vector3(col * CELL_SIZE, 0, row * CELL_SIZE);
+
+                            // provides the gameplay manager if it's valid
+                            ManagerCaller mgrCaller = obj.GetComponent<ManagerCaller>();
+                            if (mgrCaller != null)
+                                mgrCaller.gpManager = gpManager;
 
                             // instantiates the object.
                             Instantiate(obj, pos, new Quaternion(0, 0, 0, 1));
