@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ObjectFollower : MonoBehaviour
+// this should be renamed to be more accurate.
+public class FollowerCamera : MonoBehaviour
 {
     public GameObject followee; // object being followed
     public Vector3 distance = new Vector3(0, 3, 10); // distance from leader
@@ -24,7 +25,7 @@ public class ObjectFollower : MonoBehaviour
 
     }
 
-    // rotates around a vector. If an invalid number is passed, no rotation happens.
+    // rotates around a vector. If an invalid number is passed, no rotation happens. Unused.
     // 0 = x-axis, 1 = y-axis, 2 = z-axis
     private Vector3 RotateVector(Vector3 vec, float angle, int axis)
     {

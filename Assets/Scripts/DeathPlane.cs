@@ -33,7 +33,7 @@ public class DeathPlane : MonoBehaviour
             entity.transform.position = respawnPosition;
 
             Vector3 text = entity.GetComponent<Rigidbody>().velocity;
-            // entity.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+            entity.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
             // entity.GetComponent<Rigidbody>().useGravity = false;
         }
     }

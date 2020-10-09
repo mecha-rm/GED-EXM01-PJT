@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     // the player camera (used for direction)
     public GameObject playerCamera;
@@ -10,13 +10,14 @@ public class Player : MonoBehaviour
     public Rigidbody rigidBody;
 
     // movement force
-    public float moveForce = 60.0F;
+    public float moveForce = 1000.0F;
+    public float jumpForce = 5000.0F;
 
     // rotation speed
     public float rotSpeed = 90.0F;
 
     // provides force in a given direction (if enabled)
-    private Vector3 forceVec = new Vector3(5.0F, 5.0F, 10.0F);
+    private Vector3 forceVec = new Vector3(20.0F, 20.0F, 20.0F);
 
     // rotates at a given speed
     private Vector3 rotationSpeed = new Vector3(15.0F, 15.0F, 15.0F);
@@ -214,12 +215,20 @@ public class Player : MonoBehaviour
                 // forward and backward movement
                 if (Input.GetKey(KeyCode.W))
                 {
-                    rigidBody.AddForce(new Vector3(direcVec.x, 0.0F, direcVec.z) * -forceVec.z);
+                    rigidBody.AddForce(new Vector3(direcVec.x, 0.0F, direcVec.z) * -moveForce * Time.deltaTime);
                 }
                 if (Input.GetKey(KeyCode.S))
                 {
-                    rigidBody.AddForce(new Vector3(direcVec.x, 0.0F, direcVec.z) * forceVec.z);
+                    rigidBody.AddForce(new Vector3(direcVec.x, 0.0F, direcVec.z) * moveForce * Time.deltaTime);
                 }
+
+                // jumping
+                if (Input.GetKey(KeyCode.Space) && rigidBody.velocity.y == 0.0F)
+                    rigidBody.AddForce(new Vector3(0.0F, jumpForce * Time.deltaTime, 0.0F));
+
+                // cancels out all momentum.
+                if (Input.GetKey(KeyCode.P))
+                    rigidBody.velocity = new Vector3(0.0F, rigidBody.velocity.y, 0.0F);
             }
 
 
