@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameplayManager : MonoBehaviour
     // scene that comes after current scene
     public string nextScene;
 
+    public Text timeText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +21,9 @@ public class GameplayManager : MonoBehaviour
     }
 
     // start point has been triggered
-    public void StartpointTrigger()
+    public void StartpointTrigger(Vector3 startPos)
     {
-        // this shouldn't be needed
+        dpManager.respawnPosition = startPos;
     }
 
     // checkpoint has been triggered
@@ -45,6 +48,7 @@ public class GameplayManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timeText.text = "Time Since Last Checkpoint\n" + pManager.GetElapsedTimeSinceLastCheckpoint();
         
     }
 }

@@ -31,7 +31,7 @@ public class ManagerCaller : MonoBehaviour
         switch(funcCall)
         {
             case 1: // start point
-                gpManager.StartpointTrigger();
+                gpManager.StartpointTrigger(transform.position);
                 triggered = true;
                 break;
             case 2: // end point
