@@ -1,6 +1,10 @@
 # GED-EXM01-PJT
 Project for exam 1 of Game Engines course.
 
+I had to do a lot of trial and error, so my comments are likely rather messy.
+There shouldn't be any reused code, but just in case I should mention that I looked at past in-class projects in Intermediate Game Design and Computer Animation for help.
+So there may be some code leftover from things I pulled from there, even if it's not active.
+
 - INTRO -
 Along with Unity, I use GIMP to create the mazes, and apply them as heightmaps.
 I use the maze renderer (Filters > Render > Pattern > Maze), then make changes afterwards.
@@ -80,10 +84,12 @@ The player will respawn at said checkpoints if they fall off the map.
 
 - MUSIC -
 There is an audio object attached to the end goal. The idea was to have the music get louder as you get near it, but that didn't work.
-As such, the audio has just been attached to the player instead. 4 songs have been included.
-There is no in-game system to change songs; they must be manually switched from the player's audio listener.
+The audio is still attached the goal, but there's no real way to tell since it doesn't get any quieter.
 
 * PAC-MAN - Super Smash Bros. for Nintendo 3DS / Wii U - Copyright BANDAI NAMCO & Nintendo
 * Scrap Brain Zone - Sonic the Hedgehog (1991) - Copyright Masato Nakamura
 * Snake Eater (Instrumental) - Metal Gear Solid 3: Snake Eater - Copyright Konami
 * Theme of Solid Snake - Metal Gear 2: Solid Snake - Copyright Konami
+
+- OTHER -
+I made a spiketrap model, but ultimately did not get to use it. However, I still decided to include it since I bothered to make the thing.
